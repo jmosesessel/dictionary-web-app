@@ -20,9 +20,11 @@ export default {
 			"d-red": "#FF5252",
 			"d-white": "#FFFFFF",
 		},
-		// fontFamily: {
-		// 	"space-grotesk": ["Space Grotesk"],
-		// },
+		fontFamily: {
+			"mono": ["Inconsolata"],
+			"san-serif": ["Inter"],
+			"serif": ["Lora"],
+		},
 		extend: {},
 	},
 	plugins: [],
