@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
+import SearchBox from "./components/SearchBox";
 
 function App() {
 	return (
@@ -11,7 +12,7 @@ function App() {
 				<Header />
 
 				{/* Search Section */}
-				<section></section>
+				<SearchBox />
 
 				{/* Play Section */}
 				<section></section>
