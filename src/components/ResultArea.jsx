@@ -29,7 +29,7 @@ function ResultArea() {
 
                 <div className="flex gap-6 mb-[1.06rem] ">
                     <h4 className="text-d-deep-grey">Synonyms</h4>
-                    <h5 className=" font-semibold text-base">electronic keyboard</h5>
+                    <h5 className=" text-d-purple font-semibold text-base">electronic keyboard</h5>
                 </div>
 			</section>
 
