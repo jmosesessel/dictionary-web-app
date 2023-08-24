@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import SearchBox from "./components/SearchBox";
+import ResultArea from "./components/ResultArea";
+import Footer from "./components/Footer";
 
 function App() {
 	return (
@@ -15,13 +17,10 @@ function App() {
 				<SearchBox />
 
 				{/* Play Section */}
-				<section></section>
+				<ResultArea />
 
-				{/* Content Section */}
-				<section></section>
-
-				{/* Source Section */}
-				<section></section>
+				{/* Footer / Source Section */}
+				<Footer />
 			</div>
 		</>
 	);
