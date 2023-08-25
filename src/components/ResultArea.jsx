@@ -21,8 +21,8 @@ function ResultArea() {
 					<div className=' bg-d-grey w-full h-[1px]'></div>
 				</div>
                 <h4 className=" mb-[1.06rem] text-d-deep-grey">Meaning</h4>
-                <ul className=" text-[0.9375rem] text-d-light-black mb-6">
-                    <li className="mb-[0.81rem]">(etc.) A set of keys used to operate a typewriter, computer etc.</li>
+                <ul className=" text-[0.9375rem] text-d-light-black mb-6 mx-6 list-disc list-outside marker:text-d-purple">
+                    <li className="mb-[0.81rem] list-item">(etc.) A set of keys used to operate a typewriter, computer etc.</li>
                     <li className="mb-[0.81rem]">A component of many instruments including the piano, organ, and harpsichord consisting of usually black and white keys that cause different tones to be produced when struck.</li>
                     <li  className="">A device with keys of a musical keyboard, used to control electronic sound-producing devices which may be built into or separate from the keyboard device.</li>
                 </ul>
@@ -40,7 +40,7 @@ function ResultArea() {
 					<div className=' bg-d-grey w-full h-[1px]'></div>
 				</div>
                 <h4 className=" mb-[1.06rem] text-d-deep-grey">Meaning</h4>
-                <ul className=" text-[0.9375rem] text-d-light-black">
+                <ul className=" text-[0.9375rem] text-d-light-black mx-6 list-disc list-outside marker:text-d-purple">
                     <li className="mb-[0.81rem]">To type on a computer keyboard.</li>
                 </ul>
 
