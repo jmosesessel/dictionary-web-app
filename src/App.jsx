@@ -1,26 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
 
-function App() {
+function App({ setMode }) {
+	const [isDarkMode, setIsDarkMode] = useState(false);
+
+	const dLocalStorage = () => {
+		//get localStorage mode and set it to
+		let localMode = localStorage.getItem("dIsDarkMode");
+
+		if (localMode == "null") {
+			localStorage.setItem("dIsDarkMode", isDarkMode);
+			// console.log("localMode is null ...", localMode);
+			setIsDarkMode(isDarkMode);
+		}
+
+		if (localMode != "null") {
+			if (localMode == "true") setIsDarkMode(true);
+
+			if (localMode == "false") setIsDarkMode(false);
+		}
+	};
+
+	const handleTheme = (setMode) => {
+		setIsDarkMode(setMode);
+		localStorage.setItem("dIsDarkMode", setMode);
+	};
+
+	useEffect(() => {
+		dLocalStorage();
+	}, []);
 	return (
 		<>
-			<div className="bg-d-white text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] font-san-serif">
+			<div className={`${isDarkMode ? "bg-d-black" : "bg-d-white"} text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] font-san-serif`}>
 				{/* Header Section */}
 				<h1 className="sr-only">Dictionary Web App</h1>
-				<Header />
+				<Header isDarkMode={isDarkMode} setMode={handleTheme}  />
 
 				{/* Search Section */}
-				<SearchBox />
+				<SearchBox  isDarkMode={isDarkMode} />
 
 				{/* Play Section */}
-				<ResultArea />
+				<ResultArea isDarkMode={isDarkMode} />
 
 				{/* Footer / Source Section */}
-				<Footer />
+				<Footer isDarkMode={isDarkMode} />
 			</div>
 		</>
 	);

@@ -5,22 +5,25 @@ import LightToggle from '../assets/light-mode-toggle.svg'
 import DarkToggle from '../assets/dark-mode-toggle.svg'
 
 
-function Header() {
+function Header({isDarkMode, setMode}) {
+    const handleClick = (mode) => {
+        setMode(!mode)
+      }
 	return (
 		<>
 			<section className="flex justify-between mb-6">
                 <div className="flex">
-                    <img className="w-[1.75344rem] h-8 " src={LightLogo} alt="dictionary logo" />
+                    <img className="w-[1.75344rem] h-8 " src={isDarkMode ? DarkLogo : LightLogo } alt="dictionary logo" />
                 </div>
                 <div className="flex justify-center items-center">
-                    <select name="" id="">
+                    <select className="" id="">
                         <option value="San Serif">San Serif</option>
                         <option value="San Serif">Serif</option>
                         <option value="Mono">Mono</option>
 
                     </select>
                     <div className="h-8 border-l-[1px] border-x-d-grey mx-4 "></div>
-                    <img src={LightToggle} alt="toggle dark mode" />
+                    <img onClick={()=> handleClick(isDarkMode)} src={isDarkMode ? DarkToggle : LightToggle} alt="toggle dark mode" />
                 </div>
             </section>
 		</>
