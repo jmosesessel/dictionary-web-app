@@ -1,5 +1,5 @@
 import React from "react";
-import PlayBtn from "../assets/light-mode-play-btn.svg";
+import PlayLightBtn from "../assets/light-mode-play-btn.svg";
 function ResultArea({isDarkMode}) {
 	return (
 		<>
@@ -11,7 +11,7 @@ function ResultArea({isDarkMode}) {
 						/ˈkiːbɔːd/
 					</h4>
 				</div>
-				<img src={PlayBtn} alt="play button" />
+				<img className="" src={PlayLightBtn} alt="play button" />
 			</section>
 
 			{/* noun */}

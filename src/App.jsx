@@ -5,8 +5,9 @@ import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
 
-function App({ setMode }) {
+function App({ setMode, changeFont }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
+	const [currentFont, setCurrentFont] = useState("san-serif");
 
 	const dLocalStorage = () => {
 		//get localStorage mode and set it to
@@ -30,18 +31,31 @@ function App({ setMode }) {
 		localStorage.setItem("dIsDarkMode", setMode);
 	};
 
+	const handleChangeFont = (changeFont) => {
+		setCurrentFont(changeFont);
+		console.log("current font", changeFont);
+	};
+
 	useEffect(() => {
 		dLocalStorage();
 	}, []);
 	return (
 		<>
-			<div className={`${isDarkMode ? "bg-d-black" : "bg-d-white"} text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] font-san-serif`}>
+			<div
+				className={`${
+					isDarkMode ? "bg-d-black" : "bg-d-white"
+				} text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] font-${currentFont}`}
+			>
 				{/* Header Section */}
 				<h1 className="sr-only">Dictionary Web App</h1>
-				<Header isDarkMode={isDarkMode} setMode={handleTheme}  />
+				<Header
+					isDarkMode={isDarkMode}
+					setMode={handleTheme}
+					changeFont={handleChangeFont}
+				/>
 
 				{/* Search Section */}
-				<SearchBox  isDarkMode={isDarkMode} />
+				<SearchBox isDarkMode={isDarkMode} />
 
 				{/* Play Section */}
 				<ResultArea isDarkMode={isDarkMode} />
