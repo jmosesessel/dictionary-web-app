@@ -35,7 +35,7 @@ function App({ setMode, changeFont }) {
 		setCurrentFont(changeFont);
 		console.log("current font", changeFont);
 	};
-
+ 
 	useEffect(() => {
 		dLocalStorage();
 	}, []);
