@@ -7,6 +7,7 @@ import DarkToggle from "../assets/dark-mode-toggle.svg";
 function Header({ changeFont, isDarkMode, setMode }) {
 	const [selected, setSelected] = useState("san-serif");
 	const [selectedLabel, setSelectedLabel] = useState("San Serif")
+
 	let [showDropDown, setShowDropDown] = useState(false);
 
 	const options = [

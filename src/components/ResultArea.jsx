@@ -1,6 +1,8 @@
 import React from "react";
 import PlayLightBtn from "../assets/light-mode-play-btn.svg";
-function ResultArea({isDarkMode}) {
+function ResultArea({isDarkMode, searchDataResult}) {
+	if(searchDataResult)
+		console.log('result area', searchDataResult)
 	return (
 		<>
 			{/* play */}

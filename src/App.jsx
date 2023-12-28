@@ -5,10 +5,16 @@ import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
 
-function App({ setMode, changeFont }) {
+function App({ setMode, changeFont, keyword, searchData }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [currentFont, setCurrentFont] = useState("san-serif");
+	const [searchKeyword, setSearchKeyword] = useState("");
+	const [searchDataResult, setSearchDataResult] = useState(null);
 
+	const handleKeywordChange = (keyword) => {
+		console.log("app keyword", keyword);
+		setSearchKeyword(keyword);
+	};
 	const dLocalStorage = () => {
 		//get localStorage mode and set it to
 		let localMode = localStorage.getItem("dIsDarkMode");
@@ -35,10 +41,15 @@ function App({ setMode, changeFont }) {
 		setCurrentFont(changeFont);
 		console.log("current font", changeFont);
 	};
- 
+
+	const handleSearchData = (searchData) => {
+		setSearchDataResult(searchData);
+		console.log("search Data ....", searchData);
+	};
+
 	useEffect(() => {
 		dLocalStorage();
-	}, []);
+	}, [currentFont, isDarkMode]);
 	return (
 		<>
 			<div
@@ -55,13 +66,20 @@ function App({ setMode, changeFont }) {
 				/>
 
 				{/* Search Section */}
-				<SearchBox isDarkMode={isDarkMode} />
+				<SearchBox
+					isDarkMode={isDarkMode}
+					keyword={handleKeywordChange}
+					searchData={handleSearchData}
+				/>
 
 				{/* Play Section */}
-				<ResultArea isDarkMode={isDarkMode} />
+				<ResultArea
+					isDarkMode={isDarkMode}
+					searchDataResult={searchDataResult}
+				/>
 
 				{/* Footer / Source Section */}
-				<Footer isDarkMode={isDarkMode} />
+				<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
 			</div>
 		</>
 	);
