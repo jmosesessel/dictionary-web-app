@@ -11,6 +11,7 @@ function App({ setMode, changeFont, keyword, searchData }) {
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [searchDataResult, setSearchDataResult] = useState(null);
 
+	// Search Keyword function
 	const handleKeywordChange = (keyword) => {
 		console.log("app keyword", keyword);
 		setSearchKeyword(keyword);
@@ -42,6 +43,7 @@ function App({ setMode, changeFont, keyword, searchData }) {
 		console.log("current font", changeFont);
 	};
 
+	// function to load the search data
 	const handleSearchData = (searchData) => {
 		setSearchDataResult(searchData);
 		console.log("search Data ....", searchData);

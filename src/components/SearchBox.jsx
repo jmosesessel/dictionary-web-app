@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchIcon from "../assets/search-icon.svg";
 
 function SearchBox({ isDarkMode, keyword, searchData }) {
-	const [searchTerm, setSearchTerm] = useState("");
+	const [searchTerm, setSearchTerm] = useState("keyboard");
 	const [wordData, setWordData] = useState(null);
 	const [isloading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(null);
@@ -64,12 +64,11 @@ function SearchBox({ isDarkMode, keyword, searchData }) {
 		keyword(searchTerm);
 
 		fetchWord(searchTerm);
-
 	};
 
-	//   useEffect(() => {
-	//     fetchWord();
-	// }, []);
+	useEffect(() => {
+		fetchWord(searchTerm);
+	}, []);
 
 	return (
 		<>
