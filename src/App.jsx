@@ -5,17 +5,66 @@ import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
 
-function App({ setMode, changeFont, keyword, searchData }) {
+function App({ setMode, changeFont, searchData }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [currentFont, setCurrentFont] = useState("san-serif");
-	const [searchKeyword, setSearchKeyword] = useState("");
+	const [searchKeyword, setSearchKeyword] = useState("keyboard");
 	const [searchDataResult, setSearchDataResult] = useState(null);
+	// const [wordData, setWordData] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+	const [isErrorTitle, setIsErrorTitle] = useState("");
+	const [isErrorMsg, setIsErrorMsg] = useState("");
 
 	// Search Keyword function
 	const handleKeywordChange = (keyword) => {
 		console.log("app keyword", keyword);
 		setSearchKeyword(keyword);
+		// fetchWord(searchKeyword);
 	};
+
+	// fetch the data
+	const fetchWord = async (term) => {
+		setIsLoading(true);
+		setIsError(false);
+		setIsErrorMsg("");
+		setIsErrorTitle("");
+		setSearchDataResult(null);
+
+		try {
+			const response = await fetch(
+				`https://api.dictionaryapi.dev/api/v2/entries/en/${term.toLowerCase()}`
+			);
+			const data = await response.json();
+
+			console.log("data", data[0]);
+			if (response.status === 404) {
+				setIsError(true);
+				setIsErrorTitle(data.title);
+				setIsErrorMsg(data.message);
+			} else {
+				// setWordData(data);
+				setSearchDataResult(data[0]);
+				setIsError(false);
+				setIsErrorMsg("");
+			}
+		} catch (error) {
+			console.log("error", error);
+			if (error.response && error.response.status === 404) {
+				setIsError(true);
+				setIsErrorMsg(error.response.message);
+			} else if (error.response && error.response.status >= 500) {
+				setIsErrorMsg("Server error");
+			} else {
+				setIsError(true);
+				setIsErrorMsg("Ops! Some");
+			}
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// Set initial dark mode value from the localStorage
 	const dLocalStorage = () => {
 		//get localStorage mode and set it to
 		let localMode = localStorage.getItem("dIsDarkMode");
@@ -45,13 +94,15 @@ function App({ setMode, changeFont, keyword, searchData }) {
 
 	// function to load the search data
 	const handleSearchData = (searchData) => {
-		setSearchDataResult(searchData);
-		console.log("search Data ....", searchData);
+		setSearchKeyword(searchData);
+		console.log("search Data ....", searchKeyword);
+		fetchWord(searchKeyword);
 	};
 
 	useEffect(() => {
 		dLocalStorage();
-	}, [currentFont, isDarkMode]);
+		fetchWord(searchKeyword);
+	}, []);
 	return (
 		<>
 			<div
@@ -70,7 +121,7 @@ function App({ setMode, changeFont, keyword, searchData }) {
 				{/* Search Section */}
 				<SearchBox
 					isDarkMode={isDarkMode}
-					keyword={handleKeywordChange}
+					setKeyword={handleKeywordChange}
 					searchData={handleSearchData}
 				/>
 
