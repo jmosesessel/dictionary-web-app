@@ -11,7 +11,7 @@ function SearchBox({ isDarkMode, keyword, searchData }) {
 		try {
 			setIsLoading((prev) => !prev);
 			const response = await fetch(
-				`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`
+				`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm.toLowerCase()}`
 			);
 			let data;
 			if (response.status === 404) {
