@@ -53,7 +53,7 @@ function Header({ changeFont, isDarkMode, setMode }) {
 							onClick={handleSelectClick}
 							className={`${
 								isDarkMode ? "bg-d-black text-d-white" : ""
-							} border-none flex gap-5 focus:outline-none focus:border-none focus-visible:ring-0 caret-d-purple`}
+							} border-none flex gap-5 focus:outline-none focus:border-none focus-visible:ring-0 caret-d-purple cursor-pointer`}
 						>
 							<option hidden value={selected} >
 								{selectedLabel}
@@ -89,6 +89,7 @@ function Header({ changeFont, isDarkMode, setMode }) {
 							className={` border-d-grey h-8 border-l-[1px] mx-4 `}
 						></div>
 						<img
+						className="cursor-pointer"
 							onClick={() => handleClick(isDarkMode)}
 							src={isDarkMode ? DarkToggle : LightToggle}
 							alt="toggle dark mode"

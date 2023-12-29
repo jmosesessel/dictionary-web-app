@@ -91,7 +91,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 							<h4 className="text-d-deep-grey">Synonyms</h4>
 							{meaning.synonyms.map((item, index) => (
 								<h5
-									className=" text-d-purple font-semibold text-base"
+									className=" text-d-purple font-semibold text-base hover:underline cursor-pointer"
 									key={index}
 								>
 									{item}
@@ -108,7 +108,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 							<h4 className="text-d-deep-grey">Antonyms</h4>
 							{meaning.antonyms.map((item, index) => (
 								<h5
-									className=" text-d-purple font-semibold text-base inline-block"
+									className=" text-d-purple font-semibold text-base hover:underline cursor-pointer"
 									key={index}
 								>
 									{item}
