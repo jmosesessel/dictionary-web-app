@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import PlayLightBtn from "../assets/light-mode-play-btn.svg";
 function ResultArea({ isDarkMode, searchDataResult }) {
 	//play sound
@@ -24,13 +24,8 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 		});
 	};
 
-	useEffect(() => {
-		// setDataResult(searchDataResult);
-	}, []);
 	return (
 		<>
-			{/* play */}
-
 			<section className="flex justify-between items-center mb-8">
 				<div className="flex flex-col gap-3">
 					<h2
@@ -44,6 +39,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 						{searchDataResult?.phonetic}
 					</h4>
 				</div>
+				{/* Play Audio */}
 				<img
 					onClick={handlePlay}
 					className="playButton cursor-pointer"
@@ -52,7 +48,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 				/>
 			</section>
 
-			{/* noun */}
+			{/* Display the meanings */}
 
 			{searchDataResult?.meanings.map((meaning, index) => (
 				<section
@@ -89,12 +85,39 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 						))}
 					</ul>
 
-					<div className="flex gap-6 mb-[1.06rem] ">
-						<h4 className="text-d-deep-grey">Synonyms</h4>
-						<h5 className=" text-d-purple font-semibold text-base">
-							electronic keyboard
-						</h5>
-					</div>
+					{/* Display Synonyms */}
+					{meaning.synonyms != null && meaning.synonyms.length > 0 ? (
+						<div className="flex gap-6 mb-[1.06rem] flex-wrap">
+							<h4 className="text-d-deep-grey">Synonyms</h4>
+							{meaning.synonyms.map((item, index) => (
+								<h5
+									className=" text-d-purple font-semibold text-base"
+									key={index}
+								>
+									{item}
+								</h5>
+							))}
+						</div>
+					) : (
+						""
+					)}
+
+					{/* Display Antonyms */}
+					{meaning.antonyms != null && meaning.antonyms.length > 0 ? (
+						<div className="flex gap-6 mb-[1.06rem] flex-wrap">
+							<h4 className="text-d-deep-grey">Antonyms</h4>
+							{meaning.antonyms.map((item, index) => (
+								<h5
+									className=" text-d-purple font-semibold text-base inline-block"
+									key={index}
+								>
+									{item}
+								</h5>
+							))}
+						</div>
+					) : (
+						""
+					)}
 				</section>
 			))}
 		</>
