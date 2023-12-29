@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
+import WordNotFound from "./components/WordNotFound";
 
 function App({ setMode, changeFont, searchData }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
@@ -14,6 +15,7 @@ function App({ setMode, changeFont, searchData }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [isErrorTitle, setIsErrorTitle] = useState("");
+	const [isErrorResolution, setIsErrorResolution] = useState("");
 	const [isErrorMsg, setIsErrorMsg] = useState("");
 
 	// Search Keyword function
@@ -29,6 +31,7 @@ function App({ setMode, changeFont, searchData }) {
 		setIsError(false);
 		setIsErrorMsg("");
 		setIsErrorTitle("");
+		setIsErrorResolution("");
 		setSearchDataResult(null);
 
 		try {
@@ -37,16 +40,19 @@ function App({ setMode, changeFont, searchData }) {
 			);
 			const data = await response.json();
 
-			console.log("data", data[0]);
-			if (response.status === 404) {
+			console.log("data", data);
+			if (response.status == 404) {
+				console.log("404", response, data.title);
 				setIsError(true);
 				setIsErrorTitle(data.title);
 				setIsErrorMsg(data.message);
+				setIsErrorResolution(data.resolution);
 			} else {
 				// setWordData(data);
 				setSearchDataResult(data[0]);
 				setIsError(false);
 				setIsErrorMsg("");
+				setIsErrorResolution("");
 			}
 		} catch (error) {
 			console.log("error", error);
@@ -60,7 +66,9 @@ function App({ setMode, changeFont, searchData }) {
 				setIsErrorMsg("Ops! Some");
 			}
 		} finally {
-			setIsLoading(false);
+			// setIsLoading(false);
+			// setIsError(true);
+			// setIsErrorMsg("");
 		}
 	};
 
@@ -125,11 +133,24 @@ function App({ setMode, changeFont, searchData }) {
 					searchData={handleSearchData}
 				/>
 
-				{/* Play Section */}
-				<ResultArea
-					isDarkMode={isDarkMode}
-					searchDataResult={searchDataResult}
-				/>
+				{/* Not Found Section */}
+				{isError == true ? (
+					<WordNotFound
+						ErrorData={[
+							{
+								errorTitle: isErrorTitle,
+								errorMsg: isErrorMsg,
+								isErrorResolution: isErrorResolution,
+								isDarkMode: isDarkMode,
+							},
+						]}
+					/>
+				) : (
+					<ResultArea
+						isDarkMode={isDarkMode}
+						searchDataResult={searchDataResult}
+					/>
+				)}
 
 				{/* Footer / Source Section */}
 				<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
