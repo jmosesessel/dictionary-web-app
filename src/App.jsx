@@ -134,7 +134,7 @@ function App({ setMode, changeFont, searchData }) {
 				/>
 
 				{/* Not Found Section */}
-				{isError == true ? (
+				{isError && (
 					<WordNotFound
 						ErrorData={[
 							{
@@ -145,7 +145,8 @@ function App({ setMode, changeFont, searchData }) {
 							},
 						]}
 					/>
-				) : (
+				) }
+				{!isError && (
 					<ResultArea
 						isDarkMode={isDarkMode}
 						searchDataResult={searchDataResult}
