@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import PlayLightBtn from "../assets/light-mode-play-btn.svg";
 function ResultArea({ isDarkMode, searchDataResult }) {
-	
-	console.log('searchDataResult', searchDataResult)
 	//play sound
 	const handlePlay = () => {
-		console.log('playing')
+		console.log("playing");
 		let audioFileUrl = null;
 
 		if (searchDataResult && searchDataResult?.phonetics) {
-			const audioFileObj = searchDataResult.phonetics.filter(
-				(file) => {
-					console.log("searchDataResult", file);
-					return file.audio !== "";
-				}
-			);
+			const audioFileObj = searchDataResult.phonetics.filter((file) => {
+				console.log("searchDataResult", file);
+				return file.audio !== "";
+			});
 			if (audioFileObj) {
 				audioFileUrl = audioFileObj.shift().audio;
 			}
@@ -42,10 +38,10 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 							isDarkMode ? "text-d-white" : ""
 						} font-[700] text-[2rem]`}
 					>
-						{searchDataResult ? searchDataResult.word : ""}
+						{searchDataResult?.word}
 					</h2>
 					<h4 className=" text-d-purple text-[1.125rem]">
-						{searchDataResult ? searchDataResult.phonetic : ""}
+						{searchDataResult?.phonetic}
 					</h4>
 				</div>
 				<img
@@ -57,69 +53,50 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 			</section>
 
 			{/* noun */}
-			<section
-				className={`${isDarkMode ? "text-d-white" : ""} flex flex-col`}
-			>
-				<div className="flex gap-4 items-center justify-between mb-[1.125rem]">
-					<h4 className=" italic font-semibold text-lg">noun</h4>
-					<div className=" bg-d-grey w-full h-[1px]"></div>
-				</div>
-				<h4 className=" mb-[1.06rem] text-d-deep-grey">Meaning</h4>
-				<ul
+
+			{searchDataResult?.meanings.map((meaning, index) => (
+				<section
+					key={index}
 					className={`${
-						isDarkMode ? "text-d-white" : "text-d-light-black"
-					}  text-[0.9375rem]  mb-6 mx-6 list-disc list-outside marker:text-d-purple`}
+						isDarkMode ? "text-d-white" : ""
+					} flex flex-col`}
 				>
-					<li className="mb-[0.81rem] list-item">
-						(etc.) A set of keys used to operate a typewriter,
-						computer etc.
-					</li>
-					<li className="mb-[0.81rem]">
-						A component of many instruments including the piano,
-						organ, and harpsichord consisting of usually black and
-						white keys that cause different tones to be produced
-						when struck.
-					</li>
-					<li className="">
-						A device with keys of a musical keyboard, used to
-						control electronic sound-producing devices which may be
-						built into or separate from the keyboard device.
-					</li>
-				</ul>
+					<div className="flex gap-4 items-center justify-between mb-[1.125rem]">
+						<h4 className=" italic font-semibold text-lg">
+							{meaning.partOfSpeech}
+						</h4>
+						<div className=" bg-d-grey w-full h-[1px]"></div>
+					</div>
+					<h4 className=" mb-[1.06rem] text-d-deep-grey">Meaning</h4>
+					<ul
+						className={`${
+							isDarkMode ? "text-d-white" : "text-d-light-black"
+						}  text-[0.9375rem]  mb-6 mx-6 list-disc list-outside marker:text-d-purple`}
+					>
+						{meaning.definitions.map((definition, index) => (
+							<div key={index}>
+								<li className="mb-[0.81rem] list-item">
+									{definition.definition}
+								</li>
+								{definition.example ? (
+									<div className=" text-d-deep-grey">
+										"{definition.example}"
+									</div>
+								) : (
+									""
+								)}
+							</div>
+						))}
+					</ul>
 
-				<div className="flex gap-6 mb-[1.06rem] ">
-					<h4 className="text-d-deep-grey">Synonyms</h4>
-					<h5 className=" text-d-purple font-semibold text-base">
-						electronic keyboard
-					</h5>
-				</div>
-			</section>
-
-			{/* verb */}
-			<section
-				className={`${
-					isDarkMode ? "text-d-white" : "text-d-light-black"
-				} flex flex-col`}
-			>
-				<div className="flex gap-4 items-center justify-between mb-[1.125rem]">
-					<h4 className=" italic font-semibold text-lg">verb</h4>
-					<div className=" bg-d-grey w-full h-[1px]"></div>
-				</div>
-				<h4 className=" mb-[1.06rem] text-d-deep-grey">Meaning</h4>
-				<ul
-					className={`${
-						isDarkMode ? "text-d-white" : "text-d-light-black"
-					} text-[0.9375rem] text-d-light-black mx-6 list-disc list-outside marker:text-d-purple`}
-				>
-					<li className="mb-[0.81rem]">
-						To type on a computer keyboard.
-					</li>
-				</ul>
-
-				<div className=" text-d-deep-grey">
-					“Keyboarding is the part of this job I hate the most.”
-				</div>
-			</section>
+					<div className="flex gap-6 mb-[1.06rem] ">
+						<h4 className="text-d-deep-grey">Synonyms</h4>
+						<h5 className=" text-d-purple font-semibold text-base">
+							electronic keyboard
+						</h5>
+					</div>
+				</section>
+			))}
 		</>
 	);
 }
