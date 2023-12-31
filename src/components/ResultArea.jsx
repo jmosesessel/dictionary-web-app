@@ -25,7 +25,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 
 	return (
 		<>
-			<section className="flex justify-between items-center mb-8">
+			<section className="flex justify-between items-center mb-8 mt-6">
 				<div className="flex flex-col gap-3">
 					<h2
 						className={`${

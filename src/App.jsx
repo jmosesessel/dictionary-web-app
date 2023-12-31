@@ -21,6 +21,14 @@ function App({ setMode, changeFont, searchData }) {
 	const handleKeywordChange = (keyword) => {
 		console.log("app keyword", keyword);
 		setSearchKeyword(keyword);
+		if (keyword == "") {
+			setIsError(false);
+			setIsErrorMsg("");
+			setIsErrorTitle("");
+			setIsErrorResolution("");
+			setSearchDataResult(null);
+		}
+
 		// fetchWord(searchKeyword);
 	};
 
@@ -155,7 +163,15 @@ function App({ setMode, changeFont, searchData }) {
 
 				{/* Footer / Source Section */}
 				{!isError && (
-					<Footer dataToChild={[{isDarkMode:isDarkMode,searchDataResult:searchDataResult}]} keyword={searchKeyword} />
+					<Footer
+						dataToChild={[
+							{
+								isDarkMode: isDarkMode,
+								searchDataResult: searchDataResult,
+							},
+						]}
+						keyword={searchKeyword}
+					/>
 				)}
 			</div>
 		</>
