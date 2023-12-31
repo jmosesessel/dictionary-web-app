@@ -11,7 +11,6 @@ function App({ setMode, changeFont, searchData }) {
 	const [currentFont, setCurrentFont] = useState("san-serif");
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [searchDataResult, setSearchDataResult] = useState(null);
-	// const [wordData, setWordData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [isErrorTitle, setIsErrorTitle] = useState("");
@@ -156,7 +155,7 @@ function App({ setMode, changeFont, searchData }) {
 
 				{/* Footer / Source Section */}
 				{!isError && (
-					<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
+					<Footer dataToChild={[{isDarkMode:isDarkMode,searchDataResult:searchDataResult}]} keyword={searchKeyword} />
 				)}
 			</div>
 		</>
