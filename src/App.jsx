@@ -9,7 +9,7 @@ import WordNotFound from "./components/WordNotFound";
 function App({ setMode, changeFont, searchData }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [currentFont, setCurrentFont] = useState("san-serif");
-	const [searchKeyword, setSearchKeyword] = useState("keyboard");
+	const [searchKeyword, setSearchKeyword] = useState("");
 	const [searchDataResult, setSearchDataResult] = useState(null);
 	// const [wordData, setWordData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -34,41 +34,43 @@ function App({ setMode, changeFont, searchData }) {
 		setIsErrorResolution("");
 		setSearchDataResult(null);
 
-		try {
-			const response = await fetch(
-				`https://api.dictionaryapi.dev/api/v2/entries/en/${term.toLowerCase()}`
-			);
-			const data = await response.json();
+		if (term) {
+			try {
+				const response = await fetch(
+					`https://api.dictionaryapi.dev/api/v2/entries/en/${term.toLowerCase()}`
+				);
+				const data = await response.json();
 
-			console.log("data", data);
-			if (response.status == 404) {
-				console.log("404", response, data.title);
-				setIsError(true);
-				setIsErrorTitle(data.title);
-				setIsErrorMsg(data.message);
-				setIsErrorResolution(data.resolution);
-			} else {
-				// setWordData(data);
-				setSearchDataResult(data[0]);
-				setIsError(false);
-				setIsErrorMsg("");
-				setIsErrorResolution("");
+				console.log("data", data);
+				if (response.status == 404) {
+					console.log("404", response, data.title);
+					setIsError(true);
+					setIsErrorTitle(data.title);
+					setIsErrorMsg(data.message);
+					setIsErrorResolution(data.resolution);
+				} else {
+					// setWordData(data);
+					setSearchDataResult(data[0]);
+					setIsError(false);
+					setIsErrorMsg("");
+					setIsErrorResolution("");
+				}
+			} catch (error) {
+				console.log("error", error);
+				if (error.response && error.response.status === 404) {
+					setIsError(true);
+					setIsErrorMsg(error.response.message);
+					setIsErrorResolution("Try Again!");
+				} else if (error.response && error.response.status >= 500) {
+					setIsError(true);
+					setIsErrorMsg(error.response.message);
+					setIsErrorResolution("Try Again!");
+				} else {
+					setIsError(true);
+					setIsErrorMsg("Ops! Some");
+					setIsErrorResolution("Try Again!");
+				}
 			}
-		} catch (error) {
-			console.log("error", error);
-			if (error.response && error.response.status === 404) {
-				setIsError(true);
-				setIsErrorMsg(error.response.message);
-			} else if (error.response && error.response.status >= 500) {
-				setIsErrorMsg("Server error");
-			} else {
-				setIsError(true);
-				setIsErrorMsg("Ops! Some");
-			}
-		} finally {
-			// setIsLoading(false);
-			// setIsError(true);
-			// setIsErrorMsg("");
 		}
 	};
 
@@ -134,7 +136,7 @@ function App({ setMode, changeFont, searchData }) {
 				/>
 
 				{/* Not Found Section */}
-				{isError && (
+				{isError && searchDataResult != null && (
 					<WordNotFound
 						ErrorData={[
 							{
@@ -145,8 +147,8 @@ function App({ setMode, changeFont, searchData }) {
 							},
 						]}
 					/>
-				) }
-				{!isError && (
+				)}
+				{!isError && searchDataResult != null && (
 					<ResultArea
 						isDarkMode={isDarkMode}
 						searchDataResult={searchDataResult}
@@ -154,7 +156,9 @@ function App({ setMode, changeFont, searchData }) {
 				)}
 
 				{/* Footer / Source Section */}
-				<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
+				{!isError && searchDataResult != null && (
+					<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
+				)}
 			</div>
 		</>
 	);
