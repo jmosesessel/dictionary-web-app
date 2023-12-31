@@ -29,8 +29,8 @@ function SearchBox({ isDarkMode, setKeyword, searchData }) {
 		} else {
 			searchData(searchTerm);
 			errorText.style.border = isDarkMode
-				? "1px solid #3A3A3A"
-				: "1px solid #FFFFFF";
+				? "1px solid transparent"
+				: "1px solid transparent";
 
 			setShowErrorText(false);
 		}
