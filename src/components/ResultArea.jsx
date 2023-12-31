@@ -3,7 +3,6 @@ import PlayLightBtn from "../assets/light-mode-play-btn.svg";
 function ResultArea({ isDarkMode, searchDataResult }) {
 	//play sound
 	const handlePlay = () => {
-		console.log("playing");
 		let audioFileUrl = null;
 
 		if (searchDataResult && searchDataResult?.phonetics) {
