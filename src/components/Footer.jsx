@@ -1,7 +1,6 @@
 import React from "react";
 
 function Footer({ dataToChild, keyword }) {
-  console.log('dataToChild', dataToChild[0])
 	return (
 		<>
 			{dataToChild[0]?.searchDataResult !=null && (
