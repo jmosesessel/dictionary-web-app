@@ -27,15 +27,13 @@ function App({ setMode, changeFont, searchData }) {
 
 	// fetch the data
 	const fetchWord = async (term) => {
-		
-
+		setIsLoading(true);
+		setIsError(false);
+		setIsErrorMsg("");
+		setIsErrorTitle("");
+		setIsErrorResolution("");
+		setSearchDataResult(null);
 		if (term != "") {
-			setIsLoading(true);
-			setIsError(false);
-			setIsErrorMsg("");
-			setIsErrorTitle("");
-			setIsErrorResolution("");
-			setSearchDataResult(null);
 			try {
 				const response = await fetch(
 					`https://api.dictionaryapi.dev/api/v2/entries/en/${term.toLowerCase()}`

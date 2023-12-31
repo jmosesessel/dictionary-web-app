@@ -39,7 +39,7 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 					</h4>
 				</div>
 				{/* Play Audio */}
-				{searchDataResult &&(
+				{searchDataResult?.word &&(
 					<img
 					onClick={handlePlay}
 					className="playButton cursor-pointer"
