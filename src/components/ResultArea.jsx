@@ -40,12 +40,15 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 					</h4>
 				</div>
 				{/* Play Audio */}
-				<img
+				{searchDataResult &&(
+					<img
 					onClick={handlePlay}
 					className="playButton cursor-pointer"
 					src={PlayLightBtn}
 					alt="play button"
 				/>
+				)}
+				
 			</section>
 
 			{/* Display the meanings */}

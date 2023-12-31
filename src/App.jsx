@@ -27,14 +27,15 @@ function App({ setMode, changeFont, searchData }) {
 
 	// fetch the data
 	const fetchWord = async (term) => {
-		setIsLoading(true);
-		setIsError(false);
-		setIsErrorMsg("");
-		setIsErrorTitle("");
-		setIsErrorResolution("");
-		setSearchDataResult(null);
+		
 
-		if (term) {
+		if (term != "") {
+			setIsLoading(true);
+			setIsError(false);
+			setIsErrorMsg("");
+			setIsErrorTitle("");
+			setIsErrorResolution("");
+			setSearchDataResult(null);
 			try {
 				const response = await fetch(
 					`https://api.dictionaryapi.dev/api/v2/entries/en/${term.toLowerCase()}`
@@ -136,7 +137,7 @@ function App({ setMode, changeFont, searchData }) {
 				/>
 
 				{/* Not Found Section */}
-				{isError && searchDataResult != null && (
+				{isError && (
 					<WordNotFound
 						ErrorData={[
 							{
@@ -148,7 +149,7 @@ function App({ setMode, changeFont, searchData }) {
 						]}
 					/>
 				)}
-				{!isError && searchDataResult != null && (
+				{!isError && (
 					<ResultArea
 						isDarkMode={isDarkMode}
 						searchDataResult={searchDataResult}
@@ -156,7 +157,7 @@ function App({ setMode, changeFont, searchData }) {
 				)}
 
 				{/* Footer / Source Section */}
-				{!isError && searchDataResult != null && (
+				{!isError && (
 					<Footer isDarkMode={isDarkMode} keyword={searchKeyword} />
 				)}
 			</div>
