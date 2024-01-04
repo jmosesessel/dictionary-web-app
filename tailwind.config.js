@@ -21,9 +21,9 @@ export default {
 			"d-white": "#FFFFFF",
 		},
 		fontFamily: {
-			"mono": ["Inconsolata"],
-			"san-serif": ["Inter"],
-			"serif": ["Lora"],
+			"mono": "'Inconsolata'",
+			"sans": "'Inter'",
+			"serif": "'Lora'",
 		},
 		extend: {},
 	},

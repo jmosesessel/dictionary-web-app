@@ -8,7 +8,8 @@ import WordNotFound from "./components/WordNotFound";
 
 function App({ setMode, changeFont, searchData }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
-	const [currentFont, setCurrentFont] = useState("san-serif");
+
+	const [currentFont, setCurrentFont] = useState("font-san-serif");
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [searchDataResult, setSearchDataResult] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -124,13 +125,14 @@ function App({ setMode, changeFont, searchData }) {
 			<div
 				className={`${
 					isDarkMode ? "bg-d-black" : "bg-d-white"
-				} min-h-[100dvh] text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] font-${currentFont}`}
+				} min-h-[100dvh] text-[0.9375rem] leading-6 flex flex-col px-6 lg:px-[21.94rem] md:px-10 pt-6 lg:pt-[3.63rem] md:pt-[3.63rem] pb-[5.31rem] ${currentFont}`}
 			>
 				{/* Header Section */}
 				<h1 className="sr-only">Dictionary Web App</h1>
 				<Header
 					isDarkMode={isDarkMode}
 					setMode={handleTheme}
+					currentFont={currentFont}
 					changeFont={handleChangeFont}
 				/>
 

@@ -1,35 +1,34 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import LightLogo from "../assets/light-mode-book-logo.svg";
 import DarkLogo from "../assets/dark-mode-book-logo.svg";
 import LightToggle from "../assets/light-mode-toggle.svg";
 import DarkToggle from "../assets/dark-mode-toggle.svg";
 
-function Header({ changeFont, isDarkMode, setMode }) {
-	const [selected, setSelected] = useState("san-serif");
-	const [selectedLabel, setSelectedLabel] = useState("San Serif")
-
+function Header({ changeFont, currentFont, isDarkMode, setMode }) {
 	let [showDropDown, setShowDropDown] = useState(false);
 
 	const options = [
-		{ value: "san-serif", label: "San Serif" },
-		{ value: "serif", label: "Serif" },
-		{ value: "mono", label: "Mono" },
+		{ value: "font-san-serif", label: "San Serif" },
+		{ value: "font-serif", label: "Serif" },
+		{ value: "font-mono", label: "Mono" },
 	];
 
-	const handleSelected = (e) => {
-		e.preventDefault();
-		//setSelected(value)
-		setSelected(e.currentTarget.dataset.value);
-		const lab = options.filter(obj=>{
-			return obj.value == e.currentTarget.dataset.value
-		})
-		setSelectedLabel(lab[0].label)
+	const handleSelected = (value) => {
+		console.log("value", value);
+		// hide the dropdown
 		setShowDropDown(!showDropDown);
-		changeFont(e.currentTarget.dataset.value);
+		
+		const lab = options.filter((obj) => {
+			return obj.value == value;
+		});
+
+		changeFont(value);
+		console.log("header font change", value, currentFont);
 	};
 
 	const handleSelectClick = (e) => {
 		e.preventDefault();
+		// show the dropdown
 		setShowDropDown(!showDropDown);
 	};
 
@@ -55,8 +54,15 @@ function Header({ changeFont, isDarkMode, setMode }) {
 								isDarkMode ? "bg-d-black text-d-white" : ""
 							} border-none flex gap-5 focus:outline-none focus:border-none focus-visible:ring-0 caret-d-purple cursor-pointer`}
 						>
-							<option hidden value={selected} >
-								{selectedLabel}
+							
+							<option hidden value={currentFont}>
+								{options
+									.filter(
+										(option) => option.value === currentFont
+									)
+									.map(
+										(filteredOption) => filteredOption.label
+									)}
 							</option>
 						</select>
 						{showDropDown && (
@@ -70,7 +76,9 @@ function Header({ changeFont, isDarkMode, setMode }) {
 								<>
 									{options.map((option) => (
 										<li
-											onClick={handleSelected}
+											onClick={(e) =>
+												handleSelected(option.value)
+											}
 											className={`${
 												isDarkMode
 													? " hover:text-d-purple "
@@ -89,7 +97,7 @@ function Header({ changeFont, isDarkMode, setMode }) {
 							className={` border-d-grey h-8 border-l-[1px] mx-4 `}
 						></div>
 						<img
-						className="cursor-pointer"
+							className="cursor-pointer"
 							onClick={() => handleClick(isDarkMode)}
 							src={isDarkMode ? DarkToggle : LightToggle}
 							alt="toggle dark mode"
