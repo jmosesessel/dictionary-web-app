@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import PlayLightBtn from "../assets/light-mode-play-btn.svg";
-function ResultArea({ isDarkMode, searchDataResult }) {
+function ResultArea({ isDarkMode, searchDataResult, audioFileUrl, phonetic }) {
+
 	//play sound
 	const handlePlay = () => {
-		let audioFileUrl = null;
-
-		if (searchDataResult && searchDataResult?.phonetics) {
-			const audioFileObj = searchDataResult.phonetics.filter((file) => {
-				console.log("searchDataResult", file);
-				return file.audio !== "";
-			});
-			if (audioFileObj) {
-				audioFileUrl = audioFileObj.shift().audio;
-			}
-			console.log("audioFileUrl", audioFileUrl);
-		}
+		
 		// Create an audio element
-		const audioElement = new Audio(audioFileUrl);
+		if (audioFileUrl) {
+			const audioElement = new Audio(audioFileUrl);
 
-		audioElement.play().catch((error) => {
-			console.error("Error playing audio:", error);
-		});
+			audioElement.play().catch((error) => {
+				console.error("Error playing audio:", error);
+			});
+		}else{
+			alert('Sorry! There is no corresponding audio file')
+		}
 	};
 
 	return (
@@ -35,19 +29,24 @@ function ResultArea({ isDarkMode, searchDataResult }) {
 						{searchDataResult?.word}
 					</h2>
 					<h4 className=" text-d-purple text-[1.125rem]">
-						{searchDataResult?.phonetic}
+						{
+							phonetic
+							/* {
+							searchDataResult?.phonetics[0].text
+						} */
+						}
+						
 					</h4>
 				</div>
 				{/* Play Audio */}
-				{searchDataResult?.word &&(
+				{searchDataResult?.word && (
 					<img
-					onClick={handlePlay}
-					className="playButton cursor-pointer"
-					src={PlayLightBtn}
-					alt="play button"
-				/>
+						onClick={handlePlay}
+						className="playButton cursor-pointer"
+						src={PlayLightBtn}
+						alt="play button"
+					/>
 				)}
-				
 			</section>
 
 			{/* Display the meanings */}

@@ -12,6 +12,8 @@ function App({ setMode, changeFont, searchData }) {
 	const [currentFont, setCurrentFont] = useState("font-san-serif");
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [searchDataResult, setSearchDataResult] = useState(null);
+	const [phonetic, setPhonetic] = useState("");
+	const [audioFileUrl, setAudioFileUrl] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [isErrorTitle, setIsErrorTitle] = useState("");
@@ -28,6 +30,8 @@ function App({ setMode, changeFont, searchData }) {
 			setIsErrorTitle("");
 			setIsErrorResolution("");
 			setSearchDataResult(null);
+			setAudioFileUrl("");
+			setPhonetic("");
 		}
 
 		// fetchWord(searchKeyword);
@@ -41,6 +45,8 @@ function App({ setMode, changeFont, searchData }) {
 		setIsErrorTitle("");
 		setIsErrorResolution("");
 		setSearchDataResult(null);
+		setAudioFileUrl("");
+		setPhonetic("");
 		if (term != "") {
 			try {
 				const response = await fetch(
@@ -58,6 +64,25 @@ function App({ setMode, changeFont, searchData }) {
 				} else {
 					// setWordData(data);
 					setSearchDataResult(data[0]);
+
+					const phoneticObj = data[0]?.phonetics
+						.filter((file) => {
+							// console.log("searchDataResult", file);
+							return ((file['audio'] != undefined && file.audio != "") && (file['text'] != undefined && file.text != ''));
+						})
+						
+						.shift();
+					// console.log("phoneticObj", phoneticObj);
+					//set audio URL
+					setAudioFileUrl(phoneticObj?.audio);
+
+					//set phonetic to main phonetic when the phoneticObj is null
+					if (phoneticObj == "null" || phoneticObj == undefined) {
+						setPhonetic(data[0]?.phonetic);
+					} else {
+						setPhonetic(phoneticObj?.text);
+					}
+
 					setIsError(false);
 					setIsErrorMsg("");
 					setIsErrorResolution("");
@@ -160,6 +185,8 @@ function App({ setMode, changeFont, searchData }) {
 					<ResultArea
 						isDarkMode={isDarkMode}
 						searchDataResult={searchDataResult}
+						audioFileUrl={audioFileUrl}
+						phonetic={phonetic}
 					/>
 				)}
 
