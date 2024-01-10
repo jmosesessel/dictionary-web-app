@@ -53,7 +53,7 @@ function App({ setMode, changeFont, searchData, notify }) {
 		setTimeout(() => {
 			setShowToast(false);
 			setShowToastMsg("");
-		}, 3000);
+		}, 3100);
 	};
 
 	// fetch the data
