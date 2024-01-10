@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+
 import PlayLightBtn from "../assets/light-mode-play-btn.svg";
-function ResultArea({ isDarkMode, searchDataResult, audioFileUrl, phonetic }) {
+function ResultArea({ isDarkMode, searchDataResult, audioFileUrl, phonetic, notify }) {
 
 	//play sound
 	const handlePlay = () => {
@@ -13,12 +14,14 @@ function ResultArea({ isDarkMode, searchDataResult, audioFileUrl, phonetic }) {
 				console.error("Error playing audio:", error);
 			});
 		}else{
-			alert('Sorry! There is no corresponding audio file')
+			const message = 'Sorry! There is no corresponding audio file'
+			notify(message)
 		}
 	};
 
 	return (
 		<>
+			
 			<section className="flex justify-between items-center mb-8 mt-6">
 				<div className="flex flex-col gap-3">
 					<h2

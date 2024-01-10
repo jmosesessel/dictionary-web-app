@@ -5,8 +5,9 @@ import SearchBox from "./components/SearchBox";
 import ResultArea from "./components/ResultArea";
 import Footer from "./components/Footer";
 import WordNotFound from "./components/WordNotFound";
+import CustomToast from "./components/CustomToast";
 
-function App({ setMode, changeFont, searchData }) {
+function App({ setMode, changeFont, searchData, notify }) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const [currentFont, setCurrentFont] = useState("font-san-serif");
@@ -19,6 +20,8 @@ function App({ setMode, changeFont, searchData }) {
 	const [isErrorTitle, setIsErrorTitle] = useState("");
 	const [isErrorResolution, setIsErrorResolution] = useState("");
 	const [isErrorMsg, setIsErrorMsg] = useState("");
+	const [showToast, setShowToast] = useState(false);
+	const [showToastMsg, setShowToastMsg] = useState("");
 
 	// Search Keyword function
 	const handleKeywordChange = (keyword) => {
@@ -33,8 +36,24 @@ function App({ setMode, changeFont, searchData }) {
 			setAudioFileUrl("");
 			setPhonetic("");
 		}
+		setShowToast(false);
+		setShowToastMsg("");
 
 		// fetchWord(searchKeyword);
+	};
+
+	const handleShowToast = (message) => {
+		console.log("notify", message);
+		setShowToast(true);
+		setShowToastMsg(message);
+		resetToastError();
+	};
+
+	const resetToastError = () => {
+		setTimeout(() => {
+			setShowToast(false);
+			setShowToastMsg("");
+		}, 3000);
 	};
 
 	// fetch the data
@@ -68,9 +87,14 @@ function App({ setMode, changeFont, searchData }) {
 					const phoneticObj = data[0]?.phonetics
 						.filter((file) => {
 							// console.log("searchDataResult", file);
-							return ((file['audio'] != undefined && file.audio != "") && (file['text'] != undefined && file.text != ''));
+							return (
+								file["audio"] != undefined &&
+								file.audio != "" &&
+								file["text"] != undefined &&
+								file.text != ""
+							);
 						})
-						
+
 						.shift();
 					// console.log("phoneticObj", phoneticObj);
 					//set audio URL
@@ -144,9 +168,13 @@ function App({ setMode, changeFont, searchData }) {
 	useEffect(() => {
 		dLocalStorage();
 		fetchWord(searchKeyword);
+		// handleKeywordChange(searchKeyword)
+		// handleShowToast(showToastMsg)
 	}, []);
 	return (
 		<>
+			{/* <CustomToast message={showToastMsg} /> */}
+			{showToast && <CustomToast message={showToastMsg} />}
 			<div
 				className={`${
 					isDarkMode ? "bg-d-black" : "bg-d-white"
@@ -187,6 +215,7 @@ function App({ setMode, changeFont, searchData }) {
 						searchDataResult={searchDataResult}
 						audioFileUrl={audioFileUrl}
 						phonetic={phonetic}
+						notify={handleShowToast}
 					/>
 				)}
 
